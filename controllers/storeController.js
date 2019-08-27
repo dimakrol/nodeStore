@@ -34,6 +34,8 @@ exports.createStore = async (req, res) => {
     res.redirect(`/stores/${store.slug}`);
 };
 exports.updateStore = async (req, res) => {
+    // set the location data to be a point
+    req.body.location.type = 'Point';
     const store = await Store.findOneAndUpdate({_id: req.params.id}, req.body, {
         new: true,
         runValidators: true
