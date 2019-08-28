@@ -63,7 +63,7 @@ exports.createStore = async (req, res) => {
     const store = new Store(req.body);
     await store.save();
     req.flash('success', `Successfully Created ${store.name}. Care to leave a review?`);
-    res.redirect(`/stores/${store.slug}`);
+    res.redirect(`/store/${store.slug}`);
 };
 exports.updateStore = async (req, res) => {
     // set the location data to be a point
@@ -72,7 +72,14 @@ exports.updateStore = async (req, res) => {
         new: true,
         runValidators: true
     }).exec();
-    console.log(store);
+
     req.flash('success', `Successfully Updated ${store.name}.`);
-    res.redirect(`/stores/${store.slug}`);
+    res.redirect(`/store/${store.slug}`);
+};
+
+exports.getStoreBySlug = async (req, res, next) => {
+    const store = await Store.findOne({ slug: req.params.slug })
+    if (!store) return next();
+
+    res.render('store', {store, title: store.name});
 };
