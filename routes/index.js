@@ -21,4 +21,8 @@ router.post('/add/:id',
 
 router.get('/store/:slug', catchErrors(storeController.getStoreBySlug))
 
+router.get('/tags', catchErrors(storeController.getStoresByTag))
+router.get('/tags/:tag', catchErrors(storeController.getStoresByTag))
+
+
 module.exports = router;
